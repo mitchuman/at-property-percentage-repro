@@ -1,0 +1,39 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-background: #ffffff;
+  --color-foreground: #171717;
+  --color-accent: dodgerblue;
+}
+
+@property --action-offset {
+  syntax: '<percentage>';
+  /* THIS RENDERS AS "0" ON BUILD */
+  initial-value: 0%;
+  inherits: false;
+}
+
+@utility action {
+  @apply relative cursor-pointer hover:text-white transition-colors;
+
+  padding: 0.5em 1em;
+
+  &>span {
+    position: relative;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(to top,
+        var(--color-accent),
+        var(--color-accent) var(--action-offset),
+        transparent var(--action-offset));
+    transition: --action-offset var(--default-transition-duration) ease-in-out;
+  }
+
+  &:hover::before {
+    --action-offset: 100%;
+  }
+}
